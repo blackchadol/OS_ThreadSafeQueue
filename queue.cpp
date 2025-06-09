@@ -71,14 +71,48 @@ void heapify_down(Queue* queue, int index) {
 }
 
 
-
+// 추우에 깊은 복사 및 key 값 검사 방식 추가 예정
 Reply enqueue(Queue* queue, Item item) {
 	Reply reply = { false, NULL };
+
+	if (queue->size >= MAX_HEAP_SIZE) {
+		return reply;  // 힙이 가득 찼음
+	}
+
+	// 마지막 위치에 삽입
+	queue->heap[queue->size] = item;
+
+	// 힙 속성 복구
+	heapify_up(queue, queue->size);
+
+	// 크기 증가
+	queue->size++;
+
+	// 성공 리턴
+	reply.success = true;
 	return reply;
 }
 
 Reply dequeue(Queue* queue) {
 	Reply reply = { false, NULL };
+
+	if (queue->size == 0) {
+		return reply;  // 큐가 비었음
+	}
+
+	// 반환할 아이템은 루트
+	reply.item = queue->heap[0];
+	reply.success = true;
+
+	// 마지막 요소를 루트로 옮김
+	queue->heap[0] = queue->heap[queue->size - 1];
+
+	// 크기 감소
+	queue->size--;
+
+	// 힙 속성 복구
+	heapify_down(queue, 0);
+
 	return reply;
 }
 
