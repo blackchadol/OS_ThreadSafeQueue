@@ -3,7 +3,12 @@
 
 
 Queue* init(void) {
-	return NULL;
+	Queue* q = new Queue;
+	q->size = 0;
+	q->heap = (Item*)malloc(sizeof(Item) * MAX_HEAP_SIZE);
+	q->head = nullptr;
+	q->tail = nullptr;
+	return q;
 }
 
 

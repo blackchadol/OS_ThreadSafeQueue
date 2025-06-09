@@ -28,7 +28,7 @@ typedef struct node_t {
 //======스레드 safe queue 구현을 위해 연결리스트 대신 heap배열 사용하기로 결정)
 typedef struct {
     Node* head, *tail;
-    Item heap[MAX_HEAP_SIZE];
+    Item* heap;
     int size;
     std::mutex lock;
     // 필드 추가 가능
