@@ -1,7 +1,7 @@
 #include <iostream>
 #include "queue.h"
 
-
+// 10,000,000개 배열을 시작부터 선언하면 메모리를 너무 크게 잡아먹을 가능성 있으므로 나중에 수정.
 Queue* init(void) {
 	Queue* q = new Queue;
 	q->size = 0;
@@ -13,6 +13,8 @@ Queue* init(void) {
 
 
 void release(Queue* queue) {
+	delete[] queue->heap;
+	delete queue;
 	return;
 }
 
