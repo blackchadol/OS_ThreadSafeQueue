@@ -85,13 +85,32 @@ Reply enqueue(Queue* queue, Item item) {
 	Reply reply = { false, NULL };
 	std::lock_guard<std::mutex> lg(queue->lock);
 
+	auto it = queue->keyIndexMap.find(item.key);
+	if (it != queue->keyIndexMap.end()) {
+			// 키가 이미 존재하면 값만 교체 (깊은 복사)
+			int idx = it->second;
+
+		// 기존 메모리 해제
+		free(queue->heap[idx].value);
+
+		// 새 값 깊은 복사
+		void* new_val = malloc(item.value_size);
+		memcpy(new_val, item.value, item.value_size);
+		queue->heap[idx].value = new_val;
+		queue->heap[idx].value_size = item.value_size;
+
+		reply.success = true;
+		reply.item = queue->heap[idx];
+		return reply;
+	}
 	if (queue->size >= MAX_HEAP_SIZE) {
 		return reply;  // 힙이 가득 찼음
 	}
 
 	// 마지막 위치에 삽입
 	queue->heap[queue->size] = item;
-
+	// 해시에 키 추가. 
+	queue->keyIndexMap[item.key] = queue->size;
 	// 힙 속성 복구
 	heapify_up(queue, queue->size);
 
@@ -100,6 +119,7 @@ Reply enqueue(Queue* queue, Item item) {
 
 	// 성공 리턴
 	reply.success = true;
+	reply.item = item;
 	return reply;
 }
 
