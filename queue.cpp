@@ -70,6 +70,10 @@ void heapify_down(Queue* queue, int index) {
 
 	// largest가 바뀌었으면 교환하고 재귀 호출
 	if (largest != index) {
+
+		queue->keyIndexMap[queue->heap[largest].key] = index;
+		queue->keyIndexMap[queue->heap[index].key] = largest;
+
 		swap(queue->heap[index], queue->heap[largest]);
 		heapify_down(queue, largest);  // 재귀 호출
 	}
