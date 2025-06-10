@@ -45,6 +45,11 @@ void heapify_up(Queue* queue, int index) {
 	while (index > 0) {
 		int parent = (index - 1) / 2;
 		if (queue->heap[parent].key >= queue->heap[index].key) break; 
+
+		// ÀÎµ¦½º ¸Ê ¾÷µ¥ÀÌÆ®
+		queue->keyIndexMap[queue->heap[parent].key] = index;
+		queue->keyIndexMap[queue->heap[index].key] = parent;
+
 		swap(queue->heap[parent], queue->heap[index]);
 		index = parent;
 	}
