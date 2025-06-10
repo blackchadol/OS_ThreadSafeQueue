@@ -134,13 +134,13 @@ Reply dequeue(Queue* queue) {
 	// 반환할 아이템은 루트
 	reply.item = queue->heap[0];
 	reply.success = true;
-
+	queue->keyIndexMap.erase(reply.item.key);
 	// 마지막 요소를 루트로 옮김
 	queue->heap[0] = queue->heap[queue->size - 1];
 
 	// 크기 감소
 	queue->size--;
-
+	queue->keyIndexMap[queue->heap[0].key] = 0;
 	// 힙 속성 복구
 	heapify_down(queue, 0);
 
