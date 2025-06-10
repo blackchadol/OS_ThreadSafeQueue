@@ -83,6 +83,7 @@ void heapify_down(Queue* queue, int index) {
 // 추우에 깊은 복사 및 key 값 검사 방식 추가 예정
 Reply enqueue(Queue* queue, Item item) {
 	Reply reply = { false, NULL };
+	std::lock_guard<std::mutex> lg(queue->lock);
 
 	if (queue->size >= MAX_HEAP_SIZE) {
 		return reply;  // 힙이 가득 찼음
@@ -104,6 +105,7 @@ Reply enqueue(Queue* queue, Item item) {
 
 Reply dequeue(Queue* queue) {
 	Reply reply = { false, NULL };
+	std::lock_guard<std::mutex> lg(queue->lock);
 
 	if (queue->size == 0) {
 		return reply;  // 큐가 비었음
