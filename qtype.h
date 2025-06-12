@@ -6,9 +6,8 @@
 // ==========이 파일은 수정 가능==========
 
 // queue 크기가 커질수록 key 값을 검사하는 비용이 커지므로 key 값 검사를 HASH로 구현
-
-#define HASH_SIZE 1048576
-#include <unordered_map>
+#define HASH_SIZE (1 << 24)
+//#include <unordered_map>
 
 typedef unsigned int Key;  // 값이 클수록 높은 우선순위
 typedef void* Value;
@@ -45,7 +44,7 @@ typedef struct {
     Item* heap;
     int size;
     std::mutex lock;
-    std::unordered_map<Key, int> keyIndexMap;  // 키 → 힙 배열 인덱스 매핑
+    HashEntry hashTable[HASH_SIZE];// 키 → 힙 배열 인덱스 매핑
     // 필드 추가 가능
 } Queue;
 
