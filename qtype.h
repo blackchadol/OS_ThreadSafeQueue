@@ -31,6 +31,14 @@ typedef struct node_t {
     // 필드 추가 가능
 } Node;
 
+// ===== 해시맵 구조체 정의 (Open Addressing, Linear Probing) =====
+typedef struct {
+    Key key;
+    int index;  // heap 배열 상의 인덱스
+    bool valid;
+} HashEntry;
+
+
 //======스레드 safe queue 구현을 위해 연결리스트 대신 heap배열 사용하기로 결정)
 typedef struct {
     Node* head, *tail;
@@ -44,4 +52,4 @@ typedef struct {
 // 이후 자유롭게 추가/수정: 새로운 자료형 정의 등
 
 #endif
-#pragma once
+
