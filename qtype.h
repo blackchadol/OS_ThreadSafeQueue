@@ -1,13 +1,12 @@
 #ifndef _QTYPE_H  // header guard
 #define _QTYPE_H
 // key 값이 최대 10000000이므로 dequeue 없이 enqueue만 있다는 가정하에 최대 사이즈의 배열로 선언
-#define MAX_HEAP_SIZE 10000000
+#define MAX_HEAP_SIZE 1000000
 #include <mutex>
 // ==========이 파일은 수정 가능==========
 
 // queue 크기가 커질수록 key 값을 검사하는 비용이 커지므로 key 값 검사를 HASH로 구현
 #define HASH_SIZE (1 << 24)
-//#include <unordered_map>
 
 typedef unsigned int Key;  // 값이 클수록 높은 우선순위
 typedef void* Value;

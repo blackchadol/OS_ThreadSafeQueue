@@ -188,5 +188,27 @@ Reply dequeue(Queue* queue) {
 }
 
 Queue* range(Queue* queue, Key start, Key end) {
-	return NULL;
+
+		Queue* new_q = new Queue;
+		new_q->heap = (Item*)malloc(sizeof(Item) * MAX_HEAP_SIZE);
+		new_q->size = 0;
+		new_q->head = nullptr;
+		new_q->tail = nullptr;
+
+
+		for (int i = 0; i < queue->size; ++i) {
+			Key k = queue->heap[i].key;
+			if (k >= start && k <= end) {
+				// 깊은 복사
+				Item item;
+				item.key = k;
+				item.value_size = queue->heap[i].value_size;
+				item.value = malloc(item.value_size);
+				memcpy(item.value, queue->heap[i].value, item.value_size);
+
+				enqueue(new_q, item); // heapify 및 내부 해시 삽입
+			}
+		}
+
+		return new_q;
 }
